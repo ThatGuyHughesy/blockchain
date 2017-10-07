@@ -10,16 +10,26 @@
 (defroutes app-routes
   (GET "/mine" []
     (as-> (blockchain/mine) block
-          (cheshire/generate-string {:message "New Block Forged"
+          (cheshire/generate-string {:message "New Block forged"
                                      :index (:index block)
                                      :transactions (:transactions block)
                                      :proof (:proof block)
                                      :previous-hash (:previous-hash block)})))
   (POST "/transactions/new" {request :body}
-    (as-> (blockchain/new-transaction (keywordize-keys request)) block-index
-          (cheshire/generate-string {:message (str "Transaction will be added to Block " block-index)})))
+    (cheshire/generate-string {:message (str "Transaction will be added to Block "
+                                             (blockchain/new-transaction! (keywordize-keys request)))}))
   (GET "/chain" []
-    (cheshire/generate-string {:chain @blockchain/chain :length (count @blockchain/chain)}))
+    (cheshire/generate-string {:chain @blockchain/chain
+                               :length (count @blockchain/chain)}))
+  (POST "/nodes/new" {request :body}
+    (cheshire/generate-string {:message "New node has been addded"
+                               :nodes (blockchain/new-node! (keywordize-keys request))}))
+  (GET "/nodes/resolve" []
+    (if (blockchain/resolve-conflicts @blockchain/nodes 0)
+      (cheshire/generate-string {:message "Chain was replace" 
+                                 :new-chain @blockchain/chain})
+      (cheshire/generate-string {:message "Chain is authoritative"
+                                 :chain @blockchain/chain})))
   (route/not-found "Not Found"))
 
 (def app
