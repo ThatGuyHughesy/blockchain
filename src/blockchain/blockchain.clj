@@ -1,8 +1,8 @@
 (ns blockchain.blockchain
-  (require [clj-time.core :as time]
-           [clj-time.coerce :as time-coerce]
-           [cheshire.core :refer :all]
-           [pandect.algo.sha256 :refer :all])
+  (:require [clj-time.core :as time]
+            [clj-time.coerce :as time-coerce]
+            [cheshire.core :refer :all]
+            [pandect.algo.sha256 :refer :all])
   (:import (java.util UUID)))
 
 (def node-identifier (str (UUID/randomUUID)))
@@ -39,11 +39,11 @@
     (swap! chain conj next-block)
     next-block))
 
-(defn new-transaction [{:keys [sender recipient amount] :as transaction}]
+(defn new-transaction [{:keys [sender recipient amount]}]
   (swap! current_transactions conj {:sender sender
                                     :recipient recipient
                                     :amount amount})
-  (-> (last-block) :index))
+  (:index (last-block)))
 
 (defn- valid-proof [previous-block proof]
   (let [guess-hash (sha256 (str (:proof previous-block) proof))]
@@ -51,7 +51,7 @@
 
 (defn- proof-of-work [previous-block]
   (loop [proof 0]
-    (if (not (valid-proof previous-block proof))
+    (if-not (valid-proof previous-block proof)
       (recur (inc proof)) proof)))
 
 (defn mine []

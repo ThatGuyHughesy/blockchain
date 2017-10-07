@@ -5,7 +5,7 @@
             :url "https://opensource.org/licenses/MIT"}
   :author "Conor Hughes <hello@conorhughes.me>"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [cheshire "5.7.1"]
+                 [cheshire "5.8.0"]
                  [compojure "1.6.0"]
                  [ring/ring-json "0.4.0"]
                  [environ "1.1.0"]
