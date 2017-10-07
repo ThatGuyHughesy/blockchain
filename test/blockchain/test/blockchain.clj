@@ -4,7 +4,7 @@
             [clj-time.coerce :as tc]))
 
 (deftest test-mining
-  (is (= (bc/new-transaction {:sender "123456789"
+  (is (= (bc/new-transaction! {:sender "123456789"
                               :recipient "987654321"
                               :amount 5})
          0))
@@ -49,7 +49,7 @@
                                     {:amount 1
                                      :recipient bc/node-identifier
                                      :sender "0"}]}]))
-  (is (= (bc/new-transaction {:sender "123456789"
+  (is (= (bc/new-transaction! {:sender "123456789"
                               :recipient "987654321"
                               :amount 5})
          1)))

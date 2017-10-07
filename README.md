@@ -1,5 +1,5 @@
 # blockchain
-Clojure implementation of blockchain inspired by this[article](https://hackernoon.com/learn-blockchains-by-building-one-117428612f46)
+Clojure implementation of blockchain inspired by this [article](https://hackernoon.com/learn-blockchains-by-building-one-117428612f46)
 
 [![Build Status](https://travis-ci.org/ThatGuyHughesy/blockchain.svg?branch=master)](https://travis-ci.org/ThatGuyHughesy/blockchain)
 
@@ -41,6 +41,24 @@ GET /mine
 
 ```sh
 GET /chain
+```
+
+**Add a new node.**
+
+```sh
+POST /nodes/new
+```
+
+Parameters
+
+| Name          | Type          | Description
+| ------------- | ------------- |------------------------- |
+| address       | url           | URL of node              |
+
+**Resolve node conflicts.**
+
+```sh
+GET /nodes/resolve
 ```
 
 ## Copyright & License
