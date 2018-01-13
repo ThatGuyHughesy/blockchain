@@ -45,7 +45,7 @@
     (swap! chain conj next-block)
     next-block))
 
-(defn new-transaction! [{:keys [sender recipient amount]}]
+(defn new-transaction! [sender recipient amount]
   "Create a new transaction to go into the next mined Block."
   (swap! current_transactions conj {:sender sender
                                     :recipient recipient
@@ -64,18 +64,16 @@
     (if-not (valid-proof? previous-block proof)
       (recur (inc proof)) proof)))
 
-(defn mine []
+(defn mine! []
   "Run Proof of Work Algorithm.
-   Recieve reward for finding the proof.
+   Receive reward for finding the proof.
    Forge the new Block by adding it to the Blockchain."
   (let [previous-block (last-block)
         proof (proof-of-work previous-block)]
-    (new-transaction! {:sender "0"
-                       :recipient node-identifier
-                       :amount 1})
+    (new-transaction! "0" node-identifier 1)
     (new-block! proof)))
 
-(defn new-node! [{:keys [address] :as request}]
+(defn new-node! [address]
   "Add a new node to the list of nodes."
   (swap! nodes conj address))
 
@@ -89,7 +87,7 @@
         (valid-chain? chain block (inc current-index))
         false))))
 
-(defn resolve-conflicts [nodes index]
+(defn resolve-conflicts! [nodes index]
   "Consensus algorithm that resolves conflicts by replacing the Blockhain with the longest one in the network."
   (let [request (-> (client/get (str "http://" (get nodes index) "/chain")
                                 {:socket-timeout 10000
@@ -105,4 +103,4 @@
       conflict?
       (if conflict?
         (reset! chain node-chain)
-        (resolve-conflicts nodes (inc index))))))
+        (resolve-conflicts! nodes (inc index))))))
