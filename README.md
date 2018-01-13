@@ -34,10 +34,10 @@ Parameters
 **Mine a new block.**
 
 ```sh
-GET /mine
+POST /mine
 ```
 
-**Return the full Blockchain.**
+**Get the full Blockchain.**
 
 ```sh
 GET /chain
@@ -55,10 +55,16 @@ Parameters
 | ------------- | ------------- |------------------------- |
 | address       | url           | URL of node              |
 
+**Get all nodes.**
+
+```sh
+GET /nodes
+```
+
 **Resolve node conflicts.**
 
 ```sh
-GET /nodes/resolve
+POST /nodes/resolve
 ```
 
 ## Copyright & License
