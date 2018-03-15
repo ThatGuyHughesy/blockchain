@@ -67,6 +67,11 @@ GET /nodes
 POST /nodes/resolve
 ```
 
+## Contributing
+
+Want to become a Blockchain [contributor](https://github.com/ThatGuyHughesy/blockchain/blob/master/CONTRIBUTORS.md)?  
+Then checkout our [code of conduct](https://github.com/ThatGuyHughesy/blockchain/blob/master/CODE_OF_CONDUCT.md) and [contributing guidelines](https://github.com/ThatGuyHughesy/blockchain/blob/master/CONTRIBUTING.md).
+
 ## Copyright & License
 
 Copyright (c) 2017 Conor Hughes - Released under the MIT license.
