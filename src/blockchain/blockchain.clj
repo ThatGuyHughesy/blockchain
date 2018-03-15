@@ -84,7 +84,7 @@
     (if (= current-index (-> chain count dec))
       valid?
       (if valid?
-        (valid-chain? chain block (inc current-index))
+        (recur chain block (inc current-index))
         false))))
 
 (defn resolve-conflicts! [nodes index]
@@ -103,4 +103,4 @@
       conflict?
       (if conflict?
         (reset! chain node-chain)
-        (resolve-conflicts! nodes (inc index))))))
+        (recur nodes (inc index))))))
